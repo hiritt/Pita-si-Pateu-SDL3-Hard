@@ -9,21 +9,21 @@
 #include "rectangle.h"
 #include "circle.h"
 
-// Define window dimensions
+
 constexpr int WINDOW_WIDTH{ 700 };
 constexpr int WINDOW_HEIGHT{ 800 };
 
-// Vertical scrolling grid related variables (from template)
+
 constexpr float VERTICAL_SCROLLING_SPEED{ 100.0f };
 constexpr int VERTICAL_SCROLLING_GRID_SQUARE_SIZE{ 20 };
 std::vector<Rectangle> scrollingGrid;
 
-// Animation related variables
+
 float DT{ 0.01f };
 Uint64 startTime{ 0 };
 Uint64 endTime{ 0 };
 
-// Define SDL Window related variables
+
 SDL_Window* window{ nullptr };
 SDL_Renderer* renderer{ nullptr };
 SDL_Event currentEvent;
@@ -39,18 +39,18 @@ namespace {
     constexpr float HALF_SHIP = SHIP_SIZE / 2.0f;
     constexpr float BULLET_RADIUS = 10.0f;
 
-    constexpr float MOUSE_ACCELERATION = 400.0f;   // pixels / second^2
-    constexpr float MOUSE_BRAKING = 800.0f;        // 2 * acceleration
-    constexpr float MAX_SHIP_SPEED = 500.0f;       // pixels / second
-    constexpr float MOUSE_DEADZONE_PX = 1.5f;      // prevents sensor micro-jitter from blocking braking
+    constexpr float MOUSE_ACCELERATION = 400.0f;   
+    constexpr float MOUSE_BRAKING = 800.0f;
+    constexpr float MAX_SHIP_SPEED = 500.0f;       
+    constexpr float MOUSE_DEADZONE_PX = 1.5f;      
 
     constexpr float PLAYER_BULLET_SPEED = 500.0f;
-    constexpr float ENEMY_BULLET_SPEED = PLAYER_BULLET_SPEED / 5.0f; // 100 px/s
+    constexpr float ENEMY_BULLET_SPEED = PLAYER_BULLET_SPEED / 5.0f;
     constexpr float PLAYER_FIRE_INTERVAL = 0.3f;
-    constexpr float ENEMY_FIRE_INTERVAL = PLAYER_FIRE_INTERVAL * 10.0f; // 3.0 s
+    constexpr float ENEMY_FIRE_INTERVAL = PLAYER_FIRE_INTERVAL * 10.0f; 
     constexpr float ENEMY_FIRST_SHOT_DELAY = 1.0f;
     constexpr float RESPAWN_INTERVAL = 3.0f;
-    constexpr float REPULSOR_PUSH = 10.0f;         // outward radial velocity change per click
+    constexpr float REPULSOR_PUSH = 10.0f;         
     constexpr float FAN_ANGLE = 15.0f * 3.14159265358979323846f / 180.0f;
 
     constexpr float FIXED_DT = 1.0f / 120.0f;
@@ -531,10 +531,10 @@ void processEvents() {
 
 void animate() {
     if (game.outcome != Outcome::Playing) {
-        return; // Stop all movement, including vertical scrolling, when the game ends
+        return; 
     }
 
-    // Scrolling grid (from template)
+    
     for (std::size_t i = 0; i < scrollingGrid.size(); i++) {
         Rectangle& gridRectangle = scrollingGrid.at(i);
         gridRectangle.pos += gridRectangle.vel * DT;
@@ -544,7 +544,7 @@ void animate() {
         }
     }
 
-    // Fixed-timestep physics & gameplay simulation
+    
     game.accumulator += static_cast<double>(DT);
     if (game.accumulator >= FIXED_DT) {
         const float motion = vecLength(game.bufferedMouseMovement);
@@ -562,17 +562,17 @@ void animate() {
 }
 
 void drawFrame() {
-    // Clear the background
+    
     SDL_SetRenderDrawColor(renderer, backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
     SDL_RenderClear(renderer);
 
-    // Draw scrolling grid (from template)
+    
     for (std::size_t i = 0; i < scrollingGrid.size(); i++) {
         Rectangle& gridRectangle = scrollingGrid.at(i);
         gridRectangle.draw(renderer);
     }
 
-    // Draw active enemies and projectiles while playing
+    
     if (game.outcome == Outcome::Playing) {
         for (const Enemy& enemy : game.enemies) {
             if (enemy.active) {
@@ -596,7 +596,7 @@ void drawFrame() {
         }
     }
 
-    // Draw player ship (green = playing, blue = victory, red = defeat)
+   
     SDL_Color playerColor{ 0, 230, 0, 255 };
     if (game.outcome == Outcome::Victory) {
         playerColor = SDL_Color{ 0, 40, 255, 255 };
@@ -608,7 +608,7 @@ void drawFrame() {
     Rectangle playerRect(SHIP_SIZE, SHIP_SIZE, game.player.position, playerColor);
     FillRectangle(renderer, playerRect);
 
-    // Update window
+    
     SDL_RenderPresent(renderer);
 }
 
