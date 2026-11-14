@@ -42,7 +42,7 @@ namespace {
     constexpr float MOUSE_ACCELERATION = 400.0f;   
     constexpr float MOUSE_BRAKING = 800.0f;
     constexpr float MAX_SHIP_SPEED = 500.0f;       
-    constexpr float MOUSE_DEADZONE_PX = 1.5f;      
+    constexpr float MOUSE_DEADZONE_PX = 0.05f;      
 
     constexpr float PLAYER_BULLET_SPEED = 500.0f;
     constexpr float ENEMY_BULLET_SPEED = PLAYER_BULLET_SPEED / 5.0f;
